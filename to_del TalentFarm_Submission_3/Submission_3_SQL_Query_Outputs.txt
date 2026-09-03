@@ -1,0 +1,33 @@
+Submission 3 SQL Query Outputs
+Generated: 2026-09-03T11:02:56
+Source: MySQL read-only validation account
+
+## Source and staging row counts
+Query: SELECT COUNT(*) AS row_count FROM `fs_source_retail`.`retail_sales_raw`
+Result source_retail: [{"row_count": 1200}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_staging`.`stg_retail_sales`
+Result staging_retail: [{"row_count": 1199}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_source_distributor`.`distributor_sales_raw`
+Result source_distributor: [{"row_count": 1000}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_staging`.`stg_distributor_sales`
+Result staging_distributor: [{"row_count": 1000}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_source_online`.`online_sales_raw`
+Result source_online: [{"row_count": 700}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_staging`.`stg_online_sales`
+Result staging_online: [{"row_count": 701}]
+
+Query: SELECT COUNT(*) AS row_count FROM `fs_datamart`.`dm_sales_transaction`
+Result datamart_transactions: [{"row_count": 2900}]
+
+## Datamart totals
+Query: SELECT COUNT(*) AS transaction_count, ROUND(SUM(net_sales_amount),2) AS total_net_sales, ROUND(SUM(gross_sales_amount),2) AS total_gross_sales, ROUND(AVG(net_sales_amount),2) AS avg_net_sales FROM fs_datamart.dm_sales_transaction WHERE transaction_status='ACTIVE'
+Result all_active_transactions: [{"transaction_count": 1864, "total_net_sales": "168574596.00", "total_gross_sales": "169347846.00", "avg_net_sales": "90437.02"}]
+
+## Aggregate group counts
+Query: SELECT 'daily' AS summary_name, COUNT(*) AS row_count FROM fs_datamart.dm_sales_daily_summary UNION ALL SELECT 'channel', COUNT(*) FROM fs_datamart.dm_sales_channel_summary UNION ALL SELECT 'region', COUNT(*) FROM fs_datamart.dm_sales_region_summary UNION ALL SELECT 'product', COUNT(*) FROM fs_datamart.dm_sales_product_summary
+Result summary_tables: [{"summary_name": "daily", "row_count": 61}, {"summary_name": "channel", "row_count": 363}, {"summary_name": "region", "row_count": 481}, {"summary_name": "product", "row_count": 244}]

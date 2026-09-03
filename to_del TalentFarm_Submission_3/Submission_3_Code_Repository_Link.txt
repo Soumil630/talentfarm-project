@@ -1,0 +1,4 @@
+https://github.com/Soumil630/talentfarm-etl-project
+
+Local workspace used for execution:
+C:\Users\talentfarm_learner\Documents\Project\talentfarm-etl-project
